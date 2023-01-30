@@ -1,6 +1,9 @@
 <h3 class="mb-20">Liste des cocktails</h3>
 <ul class="mb-20 list-primary">
-    <li (click)="selectCocktail(i)" *ngFor="let cocktail of cocktails; let i = index">{{ cocktail.name }}</li>
+    <li
+    [routerLink]="[i]" routerLinkActive="active"
+    *ngFor="let cocktail of cocktails;
+    let i = index">{{ cocktail.name }}</li>
 
 </ul>
-<button class="btn btn-primary">Ajouter un cocktail</button>
+<button routerLink="new" class="btn btn-primary">Ajouter un cocktail</button>

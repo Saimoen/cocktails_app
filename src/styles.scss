@@ -17,6 +17,22 @@ a {
   color: inherit;
 }
 
+input {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 10px 15px;
+}
+
+hr {
+  margin: 20px 0px;
+  border-top: 1px solid #ddd;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 :root {
   --font-family: "Roboto", sans-serif;
   --primary: #74b9ff;
@@ -108,26 +124,28 @@ body {
 
 //theme
 
+.list-primary-action {
+  &:hover {
+    background-color: var(--primary);
+    color: white;
+    cursor: pointer;
+  }
+  transition: all 0.4s;
+}
+li:first-child {
+  border-top: 1px solid var(--lightgray);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+li:last-child {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
 .list-primary {
   li {
     padding: 10px 15px;
     border: 1px solid var(--lightgray);
-    border-top: 0;
-    &:hover {
-      background-color: var(--primary);
-      color: white;
-      cursor: pointer;
-    }
-    transition: all 0.4s;
-  }
-  li:first-child {
-    border-top: 1px solid var(--lightgray);
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-  }
-  li:last-child {
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
   }
 }
 
@@ -138,6 +156,9 @@ body {
   font-weight: 700;
   border-radius: 3px;
   cursor: pointer;
+  &-secondary {
+    background-color: #ddd;
+  }
   &-primary {
     background-color: var(--primary);
     color: white;
@@ -146,6 +167,20 @@ body {
     }
     transition: background-color 0.4s;
   }
+}
+
+.badge {
+  background-color: var(--secondary);
+  border-radius: 3px;
+  padding: 2px 5px;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.active {
+  background-color: var(--secondary);
+  color: white;
 }
 
 //Debug

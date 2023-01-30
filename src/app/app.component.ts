@@ -1,4 +1,3 @@
-import { Cocktail } from './interfaces/cocktail.interface';
 import { Component } from '@angular/core';
 
 @Component({
