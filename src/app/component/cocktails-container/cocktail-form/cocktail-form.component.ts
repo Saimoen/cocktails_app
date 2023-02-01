@@ -1,3 +1,4 @@
+import { first } from 'rxjs';
 import { Cocktail } from './../../../shared/interfaces/cocktail.interface';
 import { CocktailService } from './../../../shared/services/cocktail.service';
 import { Component, OnInit } from '@angular/core';
@@ -27,16 +28,23 @@ export class CocktailFormComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');
       if (index !== null) {
-        this.cocktail = this.cocktailService.getCocktail(+index);
+        this.cocktailService
+          .getCocktail(+index)
+          .pipe(first((x) => !!x))
+          .subscribe((cocktail: Cocktail) => {
+            this.cocktail = cocktail;
+            this.cocktailForm = this.initForm(this.cocktail);
+          });
+      } else {
+        this.cocktailForm = this.initForm();
       }
     });
-    this.initForm(this.cocktail);
   }
 
   private initForm(
     cocktail: Cocktail = { name: '', description: '', img: '', ingredients: [] }
-  ): void {
-    this.cocktailForm = this.fb.group({
+  ): FormGroup {
+    return this.fb.group({
       name: [cocktail.name, Validators.required],
       img: [cocktail.img, Validators.required],
       description: [cocktail.description, Validators.required],
@@ -63,9 +71,11 @@ export class CocktailFormComponent implements OnInit {
 
   public submit(): void {
     if (this.cocktail) {
-      this.cocktailService.editCocktail(this.cocktailForm.value);
+      this.cocktailService
+        .editCocktail(this.cocktail._id, this.cocktailForm.value)
+        .subscribe();
     } else {
-      this.cocktailService.addCocktail(this.cocktailForm.value);
+      this.cocktailService.addCocktail(this.cocktailForm.value).subscribe();
     }
     this.router.navigate(['..'], { relativeTo: this.activatedRoute });
   }
